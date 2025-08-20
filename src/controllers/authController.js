@@ -149,7 +149,7 @@ const signIn = async (req, res) => {
 const resendCode = async (req, res) => {
   const { phoneNumber } = req.body;
 
-  const code = createAccessCode(phoneNumber);
+  const code = await createAccessCode(phoneNumber);
   return res.status(200).json({
     success: true,
     message: "success",
