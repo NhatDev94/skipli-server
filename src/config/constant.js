@@ -13,6 +13,7 @@ VONAGE_VIRTUAL_NUMBER = process.env.VONAGE_VIRTUAL_NUMBER;
 BREVO_API_KEY = process.env.BREVO_API_KEY;
 
 CLIENT_URL = process.env.CLIENT_URL;
+PRIVATE_KEY_ID = process.env.PRIVATE_KEY_ID;
 
 module.exports = {
   ACCESS_CODE_EXPIRE,
@@ -22,4 +23,5 @@ module.exports = {
   VONAGE_VIRTUAL_NUMBER,
   BREVO_API_KEY,
   CLIENT_URL,
+  PRIVATE_KEY_ID,
 };

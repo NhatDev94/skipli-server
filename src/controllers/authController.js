@@ -18,7 +18,12 @@ const createAccessCode = async (phoneNumber) => {
   });
   // send code to phone
 
-  sendSMS(phoneNumber, `Access code: ${code}`);
+  try {
+    await sendSMS(phoneNumber, `Access code: ${code}`);
+  } catch (error) {
+    console.log(error);
+  }
+  return code;
 };
 
 // SignIn token
@@ -57,7 +62,17 @@ const phoneValidate = async (req, res) => {
 
   const user = snapshot.docs[0].data();
   // create access code
-  if (user.role === "admin") createAccessCode(phoneNumber);
+  if (user.role === "admin") {
+    const code = await createAccessCode(phoneNumber);
+    return res.status(200).json({
+      success: true,
+      data: {
+        exists: true,
+        user,
+        code,
+      },
+    });
+  }
   return res.status(200).json({
     success: true,
     data: {
@@ -134,11 +149,11 @@ const signIn = async (req, res) => {
 const resendCode = async (req, res) => {
   const { phoneNumber } = req.body;
 
-  createAccessCode(phoneNumber);
+  const code = createAccessCode(phoneNumber);
   return res.status(200).json({
     success: true,
     message: "success",
-    data: {},
+    data: { code },
   });
 };
 
